@@ -1,0 +1,52 @@
+web:
+  image: dnunez24/magento_nginx
+  links:
+    - app
+  ports:
+    - "80:80"
+app:
+  image: dnunez24/magento_php
+  volumes_from:
+    - data
+  links:
+    - db
+    - search
+  environment:
+    MAGENTO_HOST: magento.local
+    MAGENTO_ADMIN_FIRSTNAME: Admin
+    MAGENTO_ADMIN_LASTNAME: User
+    MAGENTO_ADMIN_USERNAME: admin
+    MAGENTO_ADMIN_EMAIL: admin@example.com
+    MAGENTO_LOCALE: en_US
+    MAGENTO_DEFAULT_CURRENCY: USD
+    MAGENTO_TIMEZONE: America/Los_Angeles
+db:
+  image: dnunez24/magento_percona
+  ports:
+    - "3306:3306"
+  volumes_from:
+    - data
+  environment:
+    MYSQL_ROOT_PASSWORD: mage
+    MYSQL_USER: mage
+    MYSQL_PASSWORD: mage
+    MYSQL_DATABASE: magento
+search:
+  image: dnunez24/magento_solr
+  volumes_from:
+    - data
+data:
+  image: dnunez24/magento_data
+  volumes:
+    - .:/srv/magento
+setup:
+  image: dnunez24/magento_tools
+  volumes_from:
+    - data
+  command: /usr/local/bin/install-magento
+magerun:
+  image: dnunez24/magento_tools
+  volumes_from:
+    - data
+  entrypoint: ["n98-magerun", "--skip-root-check"]
+  command: list
