@@ -16,11 +16,11 @@ RUN apt-get -qqy update \
     vim \
     xz-utils \
   && pecl install -o -f xdebug \
+  && pecl install ZendOpcache \
   && docker-php-ext-install \
     bcmath \
     gd \
     mcrypt \
-    opcache \
     pcntl \
     pdo_mysql \
     soap \
