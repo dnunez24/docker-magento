@@ -16,13 +16,13 @@ RUN apt-get -qqy update \
   && docker-php-ext-configure gd \
     --with-freetype-dir=/usr/include/ \
     --with-jpeg-dir=/usr/include/ \
+  && pecl install ZendOpcache \
   && docker-php-ext-install \
     curl \
     bcmath \
     gd \
     mbstring \
     mcrypt \
-    opcache \
     pdo_mysql \
     soap \
     xsl \
