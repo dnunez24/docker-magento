@@ -1,11 +1,11 @@
 web:
-  image: dnunez24/magento_nginx
+  image: dnunez24/magento-nginx
   links:
     - app
   ports:
     - "80:80"
 app:
-  image: dnunez24/magento_php
+  image: dnunez24/magento-php
   volumes_from:
     - data
   links:
@@ -21,7 +21,7 @@ app:
     MAGENTO_DEFAULT_CURRENCY: USD
     MAGENTO_TIMEZONE: America/Los_Angeles
 db:
-  image: dnunez24/magento_percona
+  image: dnunez24/magento-percona
   ports:
     - "3306:3306"
   volumes_from:
@@ -32,20 +32,20 @@ db:
     MYSQL_PASSWORD: mage
     MYSQL_DATABASE: magento
 search:
-  image: dnunez24/magento_solr
+  image: dnunez24/magento-solr
   volumes_from:
     - data
 data:
-  image: dnunez24/magento_data
+  image: dnunez24/magento-data
   volumes:
     - .:/srv/magento
 setup:
-  image: dnunez24/magento_tools
+  image: dnunez24/magento-tools
   volumes_from:
     - data
   command: /usr/local/bin/install-magento
 magerun:
-  image: dnunez24/magento_tools
+  image: dnunez24/magento-tools
   volumes_from:
     - data
   entrypoint: ["n98-magerun", "--skip-root-check"]
