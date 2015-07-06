@@ -3,7 +3,7 @@ MAINTAINER Dave Nunez <dnunez24@gmail.com>
 
 COPY install-magento.sh /usr/local/bin/install-magento
 RUN apt-get -qqy update \
-  && apt-get -qqy install
+  && apt-get -qqy install \
     git \
     graphviz \
     libmcrypt-dev \
@@ -25,8 +25,7 @@ RUN apt-get -qqy update \
     pdo_mysql \
     soap \
     xsl \
-    zip \
-
+    zip
 ##
 # Install useful developer tools
 # including bootstrap installing Composer
