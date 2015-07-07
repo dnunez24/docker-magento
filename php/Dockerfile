@@ -11,7 +11,6 @@ RUN apt-get -qqy update \
     libmcrypt-dev \
     libpng12-dev \
     libxml2-dev \
-    libxslt-dev \
   && rm -rf /var/lib/apt/lists/* \
   && docker-php-ext-configure gd \
     --with-freetype-dir=/usr/include/ \
@@ -25,7 +24,6 @@ RUN apt-get -qqy update \
     mcrypt \
     pdo_mysql \
     soap \
-    xsl \
     zip \
   && apt-get purge --auto-remove -y \
     libcurl3-dev \
@@ -34,7 +32,8 @@ RUN apt-get -qqy update \
     libmcrypt-dev \
     libpng12-dev \
     libxml2-dev \
-    libxslt-dev
+  && mkdir -p /var/log/php-fpm \
+  && chown www-data:www-data /var/log/php-fpm
 COPY php-fpm.conf /etc/php5/fpm/php-fpm.conf
 COPY magento.conf /etc/php5/fpm/pool.d/magento.conf
 COPY xdebug.ini /etc/php5/fpm/conf.d/xdebug.ini
