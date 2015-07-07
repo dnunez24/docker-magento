@@ -26,7 +26,7 @@ RUN apt-get -qqy update \
     soap \
     xsl \
     zip
-##
+
 # Install useful developer tools
 # including bootstrap installing Composer
 ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.composer/vendor/bin
