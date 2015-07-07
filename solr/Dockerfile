@@ -22,7 +22,7 @@ RUN wget http://archive.apache.org/dist/lucene/solr/$SOLR_VERSION/$SOLR.tgz \
   && groupadd -r $SOLR_USER \
   && useradd -r -d $SOLR_HOME -s /bin/false -g $SOLR_USER $SOLR_USER
 WORKDIR $SOLR_HOME
-COPY conf/* conf/
+COPY conf/* solr/conf/
 COPY jetty-logging.xml etc/jetty-logging.xml
 COPY docker-entrypoint.sh /usr/bin/docker-entrypoint
 RUN chown -R $SOLR_USER:$SOLR_USER $SOLR_HOME \
