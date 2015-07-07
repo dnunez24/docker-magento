@@ -28,22 +28,22 @@ install_magento() {
   is_db_up "$db_timeout"
   if [[ ! -f app/etc/local.xml ]]; then
     php install.php \
-    --admin_email "$MAGENTO_ADMIN_EMAIL" \
-    --admin_firstname "$MAGENTO_ADMIN_LASTNAME" \
-    --admin_lastname "$MAGENTO_ADMIN_LASTNAME" \
-    --admin_password "$MAGENTO_ADMIN_PASSWORD" \
-    --admin_username "$MAGENTO_ADMIN_USERNAME" \
+    --admin_email "$APP_1_ENV_MAGENTO_ADMIN_EMAIL" \
+    --admin_firstname "$APP_1_ENV_MAGENTO_ADMIN_LASTNAME" \
+    --admin_lastname "$APP_1_ENV_MAGENTO_ADMIN_LASTNAME" \
+    --admin_password "$APP_1_ENV_MAGENTO_ADMIN_PASSWORD" \
+    --admin_username "$APP_1_ENV_MAGENTO_ADMIN_USERNAME" \
     --db_host db_1 \
     --db_name "$DB_1_ENV_MYSQL_DATABASE" \
     --db_pass "$DB_1_ENV_MYSQL_PASSWORD" \
     --db_user "$DB_1_ENV_MYSQL_USER" \
-    --default_currency "$MAGENTO_DEFAULT_CURRENCY" \
+    --default_currency "$APP_1_ENV_MAGENTO_DEFAULT_CURRENCY" \
     --license_agreement_accepted yes \
-    --locale "$MAGENTO_LOCALE" \
-    --secure_base_url "http://${MAGENTO_HOST-example.com}/" \
+    --locale "$APP_1_ENV_MAGENTO_LOCALE" \
+    --secure_base_url "http://${APP_1_ENV_MAGENTO_HOST-example.com}/" \
     --skip_url_validation yes \
-    --timezone "$MAGENTO_TIMEZONE" \
-    --url "http://${MAGENTO_HOST-example.com}/" \
+    --timezone "$APP_1_ENV_MAGENTO_TIMEZONE" \
+    --url "http://${APP_1_ENV_MAGENTO_HOST-example.com}/" \
     --use_rewrites yes \
     --use_secure no \
     --use_secure_admin no
@@ -53,7 +53,7 @@ install_magento() {
   chown -R :www-data media var
   chmod -R g+sw media var
 
-  if [[ ! $MAGENTO_HOST ]]; then
+  if [[ ! $APP_1_ENV_MAGENTO_HOST ]]; then
     # No base url was specified, so disable redirecting to base url.
     magerun config:delete "web/unsecure/base_url"
     magerun config:delete "web/secure/base_url"
@@ -61,7 +61,7 @@ install_magento() {
 
   # Enable Solr search engine
   magerun config:set "catalog/search/engine" "enterprise_search/engine"
-  magerun config:set "catalog/search/solr_server_port" "$SOLR_PORT"
+  magerun config:set "catalog/search/solr_server_port" "$SEARCH_1_ENV_SOLR_PORT"
   magerun config:set "catalog/search/solr_server_hostname" "search_1"
 
   magerun cache:disable config

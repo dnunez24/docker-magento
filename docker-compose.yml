@@ -43,6 +43,10 @@ setup:
   image: dnunez24/magento-tools
   volumes_from:
     - data
+  links:
+    - app
+    - db
+    - search
   command: /usr/local/bin/install-magento
 magerun:
   image: dnunez24/magento-tools
