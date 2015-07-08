@@ -37,4 +37,5 @@ RUN apt-get -qqy update \
 COPY php-fpm.conf /etc/php5/fpm/php-fpm.conf
 COPY magento.conf /etc/php5/fpm/pool.d/magento.conf
 COPY xdebug.ini /etc/php5/fpm/conf.d/xdebug.ini
+WORKDIR /srv/magento
 CMD ["/usr/local/sbin/php-fpm", "-y", "/etc/php5/fpm/php-fpm.conf"]
