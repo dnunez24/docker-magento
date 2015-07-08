@@ -53,5 +53,9 @@ magerun:
   image: dnunez24/magento-tools
   volumes_from:
     - data
+  links:
+    - app
+    - db
+    - search
   entrypoint: ["n98-magerun", "--skip-root-check"]
   command: list
