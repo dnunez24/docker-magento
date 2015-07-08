@@ -7,7 +7,7 @@ web:
 app:
   image: dnunez24/magento-php
   volumes_from:
-    - data
+    - appdata
   links:
     - db
     - search
@@ -26,7 +26,7 @@ db:
   ports:
     - "3306:3306"
   volumes_from:
-    - data
+    - dbdata
   environment:
     MYSQL_ROOT_PASSWORD: mage
     MYSQL_USER: mage
@@ -35,15 +35,26 @@ db:
 search:
   image: dnunez24/magento-solr
   volumes_from:
-    - data
-data:
-  image: dnunez24/magento-data
+    - searchdata
+appdata:
+  image: dnunez24/magento-php
   volumes:
     - .:/srv/magento
+  command: /bin/echo "Magento app data"
+dbdata:
+  image: dnunez24/magento-percona
+  volumes:
+    - /var/lib/mysql
+  command: /bin/echo "Magento MySQL data"
+searchdata:
+  image: dnunez24/magento-solr
+  volumes:
+    - /srv/solr/solr/data
+  command: /bin/echo "Magento Solr data"
 setup:
   image: dnunez24/magento-tools
   volumes_from:
-    - data
+    - appdata
   links:
     - app
     - db
@@ -52,7 +63,7 @@ setup:
 magerun:
   image: dnunez24/magento-tools
   volumes_from:
-    - data
+    - appdata
   links:
     - app
     - db
